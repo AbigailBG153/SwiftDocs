@@ -1,0 +1,51 @@
+<div class="container">
+    <h2>Mis Documentos</h2>
+    <ul class="document-list">
+      <li *ngFor="let document of documents">
+        <div class="document-item">
+          <span>{{ document.filename }}</span>
+          <div class="document-actions">
+            <button class="btn btn-doc" (click)="viewDocument(document._id)">Ver</button>
+            <button class="btn btn-doc" (click)="toggleShareSelect(document)">
+              {{ document.showShareSelect ? 'Cancelar' : 'Compartir' }}
+            </button>
+            <div *ngIf="document.showShareSelect" class="share-select">
+              <select [(ngModel)]="document.selectedUser">
+                <option *ngFor="let user of users" [value]="user._id">{{ user.username }}</option>
+              </select>
+              <button (click)="shareDocument(document._id, document.selectedUser)">Compartir</button>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  
+    <h2>Documentos que he compartido</h2>
+    <ul class="shared-document-list">
+      <li *ngFor="let document of sharedByMe">
+        <div class="document-item">
+          <span>{{ document.filename }}</span>
+          <div class="shared-with">
+            <span>Compartido con:</span>
+            <ul>
+              <li *ngFor="let user of document.sharedWith">{{ user.username }}</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+    </ul>
+  
+    <h2>Documentos compartidos conmigo</h2>
+    <ul class="received-document-list">
+      <li *ngFor="let document of sharedWithMe">
+        <div class="document-item">
+          <span>{{ document.filename }}</span>
+          <div class="shared-by">
+            <span>Compartido por: {{ document.uploadedBy }}</span>
+          </div>
+          <button (click)="viewDocument(document._id)">Ver</button>
+        </div>
+      </li>
+    </ul>
+  </div>
+  

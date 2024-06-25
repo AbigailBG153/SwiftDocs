@@ -1,0 +1,74 @@
+<div>
+    <h2>Áreas</h2>
+    <ul>
+      <li *ngFor="let area of areas">
+        {{ area.name }} - {{ area.branch.name }}
+        <input type="text" [(ngModel)]="area.newName" placeholder="Nuevo nombre" name="areaNewName">
+        <select [(ngModel)]="area.newBranchId" name="areaNewBranchId" required>
+          <option *ngFor="let sucursal of sucursales" [value]="sucursal._id">{{ sucursal.name }}</option>
+        </select>
+        <button (click)="actualizarArea(area._id, area.newName)">Actualizar</button>
+        <button (click)="eliminarArea(area._id)">Eliminar</button>
+        <button (click)="loadUsuariosPorArea(area._id)">Ver Usuarios</button>
+      </li>
+    </ul>
+    <input type="text" [(ngModel)]="nuevaAreaNombre" placeholder="Nombre de nueva área" name="nuevaAreaNombre">
+    <select [(ngModel)]="selectedSucursalId" name="selectedSucursalId" required>
+      <option *ngFor="let sucursal of sucursales" [value]="sucursal._id">{{ sucursal.name }}</option>
+    </select>
+    <button (click)="crearArea()">Crear Área</button>
+  
+    <h3>Usuarios por Área</h3>
+    <ul>
+      <li *ngFor="let usuario of usuariosPorArea">
+        {{ usuario.username }}
+      </li>
+    </ul>
+  </div>
+  
+  <div>
+    <h2>Sucursales</h2>
+    <ul>
+      <li *ngFor="let sucursal of sucursales">
+        {{ sucursal.name }}
+        <input type="text" [(ngModel)]="sucursal.newName" placeholder="Nuevo nombre" name="sucursalNewName">
+        <button (click)="actualizarSucursal(sucursal._id, sucursal.newName)">Actualizar</button>
+        <button (click)="eliminarSucursal(sucursal._id)">Eliminar</button>
+        <button (click)="loadAreasPorSucursal(sucursal._id)">Ver Áreas</button>
+      </li>
+    </ul>
+    <input type="text" [(ngModel)]="nuevoNombreSucursal" placeholder="Nombre de nueva sucursal" name="nuevoNombreSucursal">
+    <button (click)="crearSucursal()">Crear Sucursal</button>
+  
+    <h3>Áreas por Sucursal</h3>
+    <ul>
+      <li *ngFor="let area of areasPorSucursal">
+        {{ area.name }}
+      </li>
+    </ul>
+  </div>
+  
+  <div>
+    <h2>Registrar Nuevo Usuario</h2>
+    <form (ngSubmit)="registrarUsuario()">
+      <input type="text" [(ngModel)]="nuevoUsuarioUsername" placeholder="Nombre de usuario" name="nuevoUsuarioUsername" required>
+      <input type="password" [(ngModel)]="nuevoUsuarioPassword" placeholder="Contraseña" name="nuevoUsuarioPassword" required>
+      <select [(ngModel)]="selectedAreaId" name="selectedAreaId" required>
+        <option *ngFor="let area of areas" [value]="area._id">{{ area.name }}</option>
+      </select>
+      <select [(ngModel)]="selectedBranchId" name="selectedBranchId" required>
+        <option *ngFor="let sucursal of sucursales" [value]="sucursal._id">{{ sucursal.name }}</option>
+      </select>
+      <button type="submit">Registrar Usuario</button>
+    </form>
+  </div>
+  
+  <div>
+    <h2>Usuarios Registrados</h2>
+    <ul>
+      <li *ngFor="let usuario of users">
+        {{ usuario.username }} - {{ getAreaName(usuario.area) }} - {{usuario.branch  }}
+      </li>
+    </ul>
+  </div>
+  
